@@ -1,0 +1,61 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="DongToanDBModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="DongToanDBModelStoreContainer">
+    <EntitySet Name="Products1" EntityType="DongToanDBModel.Store.Products1" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Accounts" EntityType="DongToanDBModel.Store.Accounts" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Orders" EntityType="DongToanDBModel.Store.Orders" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="AccountOrder" Association="DongToanDBModel.Store.AccountOrder">
+      <End Role="Account" EntitySet="Accounts" />
+      <End Role="Order" EntitySet="Orders" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Products1">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Price" Type="decimal" Nullable="false" />
+    <Property Name="Quantity" Type="smallint" Nullable="false" />
+    <Property Name="Detail" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Accounts">
+    <Key>
+      <PropertyRef Name="Username" />
+    </Key>
+    <Property Name="Username" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Password" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Fullname" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Email" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Address" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Company" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Contact_Detail" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Orders">
+    <Key>
+      <PropertyRef Name="Order_Number" />
+    </Key>
+    <Property Name="Order_Number" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Order_Name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Order_Status" Type="smallint" Nullable="false" />
+    <Property Name="Cost" Type="int" Nullable="false" />
+    <Property Name="Payment" Type="int" Nullable="false" />
+    <Property Name="Name_Of_Place" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Address" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Type" Type="smallint" Nullable="false" />
+    <Property Name="Elevation_System_Requered" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="AccountUsername" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <Association Name="AccountOrder">
+    <End Role="Account" Type="DongToanDBModel.Store.Accounts" Multiplicity="1" />
+    <End Role="Order" Type="DongToanDBModel.Store.Orders" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Account">
+        <PropertyRef Name="Username" />
+      </Principal>
+      <Dependent Role="Order">
+        <PropertyRef Name="AccountUsername" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

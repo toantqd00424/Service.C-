@@ -1,0 +1,63 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="DongToanDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="DongToanDBEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Products1" EntityType="DongToanDBModel.Product" />
+    <EntitySet Name="Accounts" EntityType="DongToanDBModel.Account" />
+    <EntitySet Name="Orders" EntityType="DongToanDBModel.Order" />
+    <AssociationSet Name="AccountOrder" Association="DongToanDBModel.AccountOrder">
+      <End Role="Account" EntitySet="Accounts" />
+      <End Role="Order" EntitySet="Orders" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Product">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" Nullable="false" />
+    <Property Name="Price" Type="Decimal" Nullable="false" />
+    <Property Name="Quantity" Type="Int16" Nullable="false" />
+    <Property Name="Detail" Type="String" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Account">
+    <Key>
+      <PropertyRef Name="Username" />
+    </Key>
+    <Property Name="Username" Type="String" Nullable="false" annotation:StoreGeneratedPattern="None" />
+    <Property Name="Password" Type="String" Nullable="false" />
+    <Property Name="Fullname" Type="String" Nullable="false" />
+    <Property Name="Email" Type="String" Nullable="false" />
+    <Property Name="Address" Type="String" Nullable="false" />
+    <Property Name="Company" Type="String" Nullable="false" />
+    <Property Name="Contact_Detail" Type="String" Nullable="false" />
+    <NavigationProperty Name="Orders" Relationship="DongToanDBModel.AccountOrder" FromRole="Account" ToRole="Order" />
+  </EntityType>
+  <EntityType Name="Order">
+    <Key>
+      <PropertyRef Name="Order_Number" />
+    </Key>
+    <Property Name="Order_Number" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Order_Name" Type="String" Nullable="false" />
+    <Property Name="Order_Status" Type="Int16" Nullable="false" />
+    <Property Name="Cost" Type="Int32" Nullable="false" />
+    <Property Name="Payment" Type="Int32" Nullable="false" />
+    <Property Name="Name_Of_Place" Type="String" Nullable="false" />
+    <Property Name="Address" Type="String" Nullable="false" />
+    <Property Name="Type" Type="Int16" Nullable="false" />
+    <Property Name="Elevation_System_Requered" Type="String" Nullable="false" />
+    <NavigationProperty Name="Account" Relationship="DongToanDBModel.AccountOrder" FromRole="Order" ToRole="Account" />
+    <Property Name="AccountUsername" Type="String" Nullable="false" />
+  </EntityType>
+  <Association Name="AccountOrder">
+    <End Type="DongToanDBModel.Account" Role="Account" Multiplicity="1" />
+    <End Type="DongToanDBModel.Order" Role="Order" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Account">
+        <PropertyRef Name="Username" />
+      </Principal>
+      <Dependent Role="Order">
+        <PropertyRef Name="AccountUsername" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

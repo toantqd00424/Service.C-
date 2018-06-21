@@ -1,0 +1,198 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="DongToanDBModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="DongToanDBModelStoreContainer">
+    <EntitySet Name="Products1" EntityType="DongToanDBModel.Store.Products1" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Accounts" EntityType="DongToanDBModel.Store.Accounts" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Orders" EntityType="DongToanDBModel.Store.Orders" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="AccountOrder" Association="DongToanDBModel.Store.AccountOrder">
+      <End Role="Account" EntitySet="Accounts" />
+      <End Role="Order" EntitySet="Orders" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Products1">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Price" Type="decimal" Nullable="false" />
+    <Property Name="Quantity" Type="smallint" Nullable="false" />
+    <Property Name="Detail" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Accounts">
+    <Key>
+      <PropertyRef Name="Username" />
+    </Key>
+    <Property Name="Username" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Password" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Fullname" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Email" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Address" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Company" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Contact_Detail" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Orders">
+    <Key>
+      <PropertyRef Name="Order_Number" />
+    </Key>
+    <Property Name="Order_Number" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Order_Name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Order_Status" Type="smallint" Nullable="false" />
+    <Property Name="Cost" Type="int" Nullable="false" />
+    <Property Name="Payment" Type="int" Nullable="false" />
+    <Property Name="Name_Of_Place" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Address" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Type" Type="smallint" Nullable="false" />
+    <Property Name="Elevation_System_Requered" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="AccountUsername" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <Association Name="AccountOrder">
+    <End Role="Account" Type="DongToanDBModel.Store.Accounts" Multiplicity="1" />
+    <End Role="Order" Type="DongToanDBModel.Store.Orders" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Account">
+        <PropertyRef Name="Username" />
+      </Principal>
+      <Dependent Role="Order">
+        <PropertyRef Name="AccountUsername" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="DongToanDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="DongToanDBEntities" annotation:LazyLoadingEnabled="true" >
+          <EntitySet Name="Products1" EntityType="DongToanDBModel.Product" />
+          <EntitySet Name="Accounts" EntityType="DongToanDBModel.Account" />
+          <EntitySet Name="Orders" EntityType="DongToanDBModel.Order" />
+          <AssociationSet Name="AccountOrder" Association="DongToanDBModel.AccountOrder">
+            <End Role="Account" EntitySet="Accounts" />
+            <End Role="Order" EntitySet="Orders" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Product">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" />
+          <Property Name="Price" Type="Decimal" Nullable="false" />
+          <Property Name="Quantity" Type="Int16" Nullable="false" />
+          <Property Name="Detail" Type="String" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Account">
+          <Key>
+            <PropertyRef Name="Username" />
+          </Key>
+          <Property Name="Username" Type="String" Nullable="false" annotation:StoreGeneratedPattern="None" />
+          <Property Name="Password" Type="String" Nullable="false" />
+          <Property Name="Fullname" Type="String" Nullable="false" />
+          <Property Name="Email" Type="String" Nullable="false" />
+          <Property Name="Address" Type="String" Nullable="false" />
+          <Property Name="Company" Type="String" Nullable="false" />
+          <Property Name="Contact_Detail" Type="String" Nullable="false" />
+          <NavigationProperty Name="Orders" Relationship="DongToanDBModel.AccountOrder" FromRole="Account" ToRole="Order" />
+        </EntityType>
+        <EntityType Name="Order">
+          <Key>
+            <PropertyRef Name="Order_Number" />
+          </Key>
+          <Property Name="Order_Number" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Order_Name" Type="String" Nullable="false" />
+          <Property Name="Order_Status" Type="Int16" Nullable="false" />
+          <Property Name="Cost" Type="Int32" Nullable="false" />
+          <Property Name="Payment" Type="Int32" Nullable="false" />
+          <Property Name="Name_Of_Place" Type="String" Nullable="false" />
+          <Property Name="Address" Type="String" Nullable="false" />
+          <Property Name="Type" Type="Int16" Nullable="false" />
+          <Property Name="Elevation_System_Requered" Type="String" Nullable="false" />
+          <NavigationProperty Name="Account" Relationship="DongToanDBModel.AccountOrder" FromRole="Order" ToRole="Account" />
+          <Property Name="AccountUsername" Type="String" Nullable="false" />
+        </EntityType>
+        <Association Name="AccountOrder">
+          <End Type="DongToanDBModel.Account" Role="Account" Multiplicity="1" />
+          <End Type="DongToanDBModel.Order" Role="Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Account">
+              <PropertyRef Name="Username" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="AccountUsername" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="DongToanDBModelStoreContainer" CdmEntityContainer="DongToanDBEntities">
+    <EntitySetMapping Name="Products1">
+      <EntityTypeMapping TypeName="IsTypeOf(DongToanDBModel.Product)">
+        <MappingFragment StoreEntitySet="Products1">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Price" ColumnName="Price" />
+          <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+          <ScalarProperty Name="Detail" ColumnName="Detail" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Accounts">
+      <EntityTypeMapping TypeName="IsTypeOf(DongToanDBModel.Account)">
+        <MappingFragment StoreEntitySet="Accounts">
+          <ScalarProperty Name="Username" ColumnName="Username" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+          <ScalarProperty Name="Fullname" ColumnName="Fullname" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="Address" ColumnName="Address" />
+          <ScalarProperty Name="Company" ColumnName="Company" />
+          <ScalarProperty Name="Contact_Detail" ColumnName="Contact_Detail" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Orders">
+      <EntityTypeMapping TypeName="IsTypeOf(DongToanDBModel.Order)">
+        <MappingFragment StoreEntitySet="Orders">
+          <ScalarProperty Name="Order_Number" ColumnName="Order_Number" />
+          <ScalarProperty Name="Order_Name" ColumnName="Order_Name" />
+          <ScalarProperty Name="Order_Status" ColumnName="Order_Status" />
+          <ScalarProperty Name="Cost" ColumnName="Cost" />
+          <ScalarProperty Name="Payment" ColumnName="Payment" />
+          <ScalarProperty Name="Name_Of_Place" ColumnName="Name_Of_Place" />
+          <ScalarProperty Name="Address" ColumnName="Address" />
+          <ScalarProperty Name="Type" ColumnName="Type" />
+          <ScalarProperty Name="Elevation_System_Requered" ColumnName="Elevation_System_Requered" />
+          <ScalarProperty Name="AccountUsername" ColumnName="AccountUsername" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping></edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="False" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
